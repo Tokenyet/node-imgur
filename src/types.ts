@@ -4,4 +4,10 @@ interface IAccessTokenRequestData {
   clientSecret: string;
 }
 
-export { IAccessTokenRequestData };
+interface IBaseInfoOptions {
+  username?: string;
+  clientId: string;
+  accountId?: string;
+}
+
+export { IAccessTokenRequestData, IBaseInfoOptions };
