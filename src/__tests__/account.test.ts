@@ -9,12 +9,16 @@ import {
   createBlock,
   deleteBlock,
   getImages,
+  getGalleryFavorites,
+  getFavorites,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
   BLOCKS_ENDPOINT,
   BLOCK_CREATE_DELETE_ENDPOINT,
   IMAGES_ENDPOINT,
+  GALLERY_FAVORITES_ENDPOINT,
+  FAVORITES_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -101,14 +105,14 @@ describe('getBlockStatus tests', () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await expect(getBlockStatus(username, accessToken)).resolves.toBe(undefined);
+    await expect(getBlockStatus({ username, accessToken })).resolves.toBe(undefined);
   });
 
   test('getBlockStatus calls the correct endpoint', async () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await getBlockStatus(username, accessToken);
+    await getBlockStatus({ username, accessToken });
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(`${BLOCK_STATUS_ENDPOINT.replace('<username>', username)}`, {
@@ -147,14 +151,14 @@ describe('createBlock tests', () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await expect(createBlock(username, accessToken)).resolves.toBe(undefined);
+    await expect(createBlock({ username, accessToken })).resolves.toBe(undefined);
   });
 
   test('createBlock calls the correct endpoint', async () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await createBlock(username, accessToken);
+    await createBlock({ username, accessToken });
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
@@ -174,14 +178,14 @@ describe('deleteBlock tests', () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await expect(deleteBlock(username, accessToken)).resolves.toBe(undefined);
+    await expect(deleteBlock({ username, accessToken })).resolves.toBe(undefined);
   });
 
   test('deleteBlock calls the correct endpoint', async () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await deleteBlock(username, accessToken);
+    await deleteBlock({ username, accessToken });
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
@@ -200,16 +204,107 @@ describe('getImages tests', () => {
   test('getImages returns a resolved Promise on success', async () => {
     const accessToken = 'myAccessToken';
 
-    await expect(getImages(accessToken)).resolves.toBe(undefined);
+    await expect(getImages({ accessToken })).resolves.toBe(undefined);
   });
 
-  test('getImages calls the correct endpoint', async () => {
+  test('getImages calls the correct endpoint using defaults', async () => {
     const accessToken = 'myAccessToken';
 
-    await getImages(accessToken);
+    await getImages({ accessToken });
 
+    const expectedEndpoint = IMAGES_ENDPOINT.replace('<username>', 'me');
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(IMAGES_ENDPOINT, {
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getImages calls the correct endpoint with username specified', async () => {
+    const accessToken = 'myAccessToken';
+    const username = 'testuser';
+
+    await getImages({ accessToken, username });
+
+    const expectedEndpoint = IMAGES_ENDPOINT.replace('<username>', username);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getGalleryFavorites calls the correct endpoint with defaults', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+
+    await getGalleryFavorites({ username, clientId });
+
+    const expectedEndpoint = GALLERY_FAVORITES_ENDPOINT.replace('<username>', username);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getGalleryFavorites calls the correct endpoint with options', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+    const page = 2;
+    const favoriteSort = 'oldest';
+
+    await getGalleryFavorites({ username, clientId, page, favoriteSort });
+
+    const expectedEndpoint = `${GALLERY_FAVORITES_ENDPOINT.replace(
+      '<username>',
+      username,
+    )}/${page}/${favoriteSort}`;
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getFavorites calls the correct endpoint with defaults', async () => {
+    const username = 'myUsername';
+    const accessToken = 'myAccessToken';
+
+    await getFavorites({ username, accessToken });
+
+    const expectedEndpoint = FAVORITES_ENDPOINT.replace('<username>', username);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getFavorites calls the correct endpoint with options', async () => {
+    const username = 'myUsername';
+    const accessToken = 'myaccessToken';
+    const page = 2;
+    const sort = 'oldest';
+
+    await getFavorites({ username, accessToken, page, sort });
+
+    const expectedEndpoint = `${FAVORITES_ENDPOINT.replace(
+      '<username>',
+      username,
+    )}/${page}/${sort}`;
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

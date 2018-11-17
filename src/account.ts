@@ -1,5 +1,12 @@
 import fetch from 'node-fetch';
-import { IAccessTokenRequestData, IBaseInfoOptions } from './types';
+import {
+  IAccessTokenRequestData,
+  IBaseInfoOptions,
+  IBlockOptions,
+  IAccountImagesOptions,
+  IGalleryFavoritesOptions,
+  IFavoritesOptions,
+} from './types';
 import { URLSearchParams } from 'url';
 
 const OAUTH2_TOKEN_ENDPOINT = 'https://api.imgur.com/oauth2/token';
@@ -10,7 +17,11 @@ const BLOCK_STATUS_ENDPOINT = 'https://api.imgur.com/account/v1/<username>/block
 const BLOCKS_ENDPOINT = 'https://api.imgur.com/3/account/me/block';
 const BLOCK_CREATE_DELETE_ENDPOINT = 'https://api.imgur.com/account/v1/<username>/block';
 
-const IMAGES_ENDPOINT = 'https://api.imgur.com/3/account/me/images';
+const IMAGES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/images';
+
+const GALLERY_FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/gallery_favorites';
+
+const FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/favorites';
 
 /**
  * Get an access token
@@ -51,7 +62,7 @@ function getBaseInfo(options: IBaseInfoOptions) {
   });
 }
 
-function getBlockStatus(username: string, accessToken: string) {
+function getBlockStatus({ username, accessToken }: IBlockOptions) {
   return fetch(`${BLOCK_STATUS_ENDPOINT.replace('<username>', username)}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -69,7 +80,7 @@ function getBlocks(accessToken: string) {
   });
 }
 
-function createBlock(username: string, accessToken: string) {
+function createBlock({ username, accessToken }: IBlockOptions) {
   return fetch(`${BLOCK_CREATE_DELETE_ENDPOINT.replace('<username>', username)}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -78,7 +89,7 @@ function createBlock(username: string, accessToken: string) {
   });
 }
 
-function deleteBlock(username: string, accessToken: string) {
+function deleteBlock({ username, accessToken }: IBlockOptions) {
   return fetch(`${BLOCK_CREATE_DELETE_ENDPOINT.replace('<username>', username)}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -87,8 +98,46 @@ function deleteBlock(username: string, accessToken: string) {
   });
 }
 
-function getImages(accessToken: string) {
-  return fetch(IMAGES_ENDPOINT, {
+function getImages({ accessToken, username = 'me' }: IAccountImagesOptions) {
+  return fetch(IMAGES_ENDPOINT.replace('<username>', username), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'GET',
+  });
+}
+
+function getGalleryFavorites(options: IGalleryFavoritesOptions) {
+  const { username, clientId } = options;
+  let endpoint = GALLERY_FAVORITES_ENDPOINT.replace('<username>', username);
+
+  if (options.page) {
+    endpoint = `${endpoint}/${options.page}`;
+    if (options.favoriteSort) {
+      endpoint = `${endpoint}/${options.favoriteSort}`;
+    }
+  }
+
+  return fetch(endpoint, {
+    headers: {
+      Authorization: `Client-ID ${clientId}`,
+    },
+    method: 'GET',
+  });
+}
+
+function getFavorites(options: IFavoritesOptions) {
+  const { username, accessToken } = options;
+  let endpoint = FAVORITES_ENDPOINT.replace('<username>', username);
+
+  if (options.page) {
+    endpoint = `${endpoint}/${options.page}`;
+    if (options.sort) {
+      endpoint = `${endpoint}/${options.sort}`;
+    }
+  }
+
+  return fetch(endpoint, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -103,6 +152,8 @@ export {
   BLOCKS_ENDPOINT,
   BLOCK_CREATE_DELETE_ENDPOINT,
   IMAGES_ENDPOINT,
+  GALLERY_FAVORITES_ENDPOINT,
+  FAVORITES_ENDPOINT,
   getAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -110,4 +161,6 @@ export {
   createBlock,
   deleteBlock,
   getImages,
+  getGalleryFavorites,
+  getFavorites,
 };
