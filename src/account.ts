@@ -27,7 +27,7 @@ const FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/favorites
  * Get an access token
  * @param data IAccessTokenRequestData
  */
-function generateAccessToken(data: IAccessTokenRequestData): Promise<any> {
+async function generateAccessToken(data: IAccessTokenRequestData): Promise<any> {
   const { refreshToken, clientId, clientSecret } = data;
 
   const params = new URLSearchParams();
@@ -36,13 +36,15 @@ function generateAccessToken(data: IAccessTokenRequestData): Promise<any> {
   params.append('client_secret', clientSecret);
   params.append('grant_type', 'refresh_token');
 
-  return fetch(OAUTH2_TOKEN_ENDPOINT, {
+  const response = await fetch(OAUTH2_TOKEN_ENDPOINT, {
     body: params,
     method: 'POST',
   });
+
+  return await response.json();
 }
 
-function getBaseInfo(options: IBaseInfoOptions) {
+async function getBaseInfo(options: IBaseInfoOptions) {
   const { username, clientId, accountId } = options;
   let endpoint = ACCOUNT_ENDPOINT;
 
@@ -54,57 +56,69 @@ function getBaseInfo(options: IBaseInfoOptions) {
     endpoint = `${ACCOUNT_ENDPOINT}/?account_id=${accountId}`;
   }
 
-  return fetch(endpoint, {
+  const response = await fetch(endpoint, {
     headers: {
       Authorization: `Client-ID ${clientId}`,
     },
     method: 'GET',
   });
+
+  return await response.json();
 }
 
-function getBlockStatus({ username, accessToken }: IBlockOptions) {
-  return fetch(`${BLOCK_STATUS_ENDPOINT.replace('<username>', username)}`, {
+async function getBlockStatus({ username, accessToken }: IBlockOptions) {
+  const response = await fetch(`${BLOCK_STATUS_ENDPOINT.replace('<username>', username)}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'GET',
   });
+
+  return await response.json();
 }
 
-function getBlocks(accessToken: string) {
-  return fetch(BLOCKS_ENDPOINT, {
+async function getBlocks(accessToken: string) {
+  const response = await fetch(BLOCKS_ENDPOINT, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'GET',
   });
+
+  return await response.json();
 }
 
-function createBlock({ username, accessToken }: IBlockOptions) {
-  return fetch(`${BLOCK_CREATE_DELETE_ENDPOINT.replace('<username>', username)}`, {
+async function createBlock({ username, accessToken }: IBlockOptions) {
+  const response = await fetch(`${BLOCK_CREATE_DELETE_ENDPOINT.replace('<username>', username)}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'POST',
   });
+
+  return await response.json();
 }
 
-function deleteBlock({ username, accessToken }: IBlockOptions) {
-  return fetch(`${BLOCK_CREATE_DELETE_ENDPOINT.replace('<username>', username)}`, {
+async function deleteBlock({ username, accessToken }: IBlockOptions) {
+  const response = await fetch(`${BLOCK_CREATE_DELETE_ENDPOINT.replace('<username>', username)}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'DELETE',
   });
+
+  return await response.json();
 }
 
-function getImages({ accessToken, username = 'me' }: IAccountImagesOptions) {
-  return fetch(IMAGES_ENDPOINT.replace('<username>', username), {
+async function getImages({ accessToken, username = 'me' }: IAccountImagesOptions) {
+  const response = await fetch(IMAGES_ENDPOINT.replace('<username>', username), {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'GET',
   });
+
+  return await response.json();
 }
 
 function getGalleryFavorites(options: IGalleryFavoritesOptions) {

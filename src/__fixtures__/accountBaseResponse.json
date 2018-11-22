@@ -1,0 +1,21 @@
+{
+  "data": {
+    "id": 123456,
+    "url": "testuser",
+    "bio": null,
+    "avatar": "https://imgur.com/user/testuser/avatar?maxwidth=290",
+    "avatar_name": "default/T",
+    "cover": "https://imgur.com/user/testuser/cover?maxwidth=2560",
+    "cover_name": "default/1-space",
+    "reputation": 0,
+    "reputation_name": "Neutral",
+    "created": 1310522831,
+    "pro_expiration": false,
+    "user_follow": {
+      "status": false
+    },
+    "is_blocked": false
+  },
+  "success": true,
+  "status": 200
+}

@@ -1,0 +1,250 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createBlock tests createBlock calls the correct endpoint 1`] = `
+Object {
+  "data": Object {
+    "blocked": true,
+  },
+}
+`;
+
+exports[`deleteBlock tests deleteBlock calls the correct endpoint 1`] = `
+Object {
+  "data": Object {
+    "blocked": false,
+  },
+}
+`;
+
+exports[`getAccessToken tests getAccessToken calls the correct endpoint and resolves 1`] = `
+Object {
+  "access_token": "b6fb3801f9caf9968c369532ce26666d868f54fbfake",
+  "account_id": 123456,
+  "account_username": "testuser",
+  "expires_in": 315360000,
+  "refresh_token": "183b1z001c5a4be719083e5221d8f2718b184694fake",
+  "scope": "",
+  "token_type": "bearer",
+}
+`;
+
+exports[`getBaseInfo tests getBaseInfo calls the correct endpoint and resolves 1`] = `
+Object {
+  "data": Object {
+    "avatar": "https://imgur.com/user/testuser/avatar?maxwidth=290",
+    "avatar_name": "default/T",
+    "bio": null,
+    "cover": "https://imgur.com/user/testuser/cover?maxwidth=2560",
+    "cover_name": "default/1-space",
+    "created": 1310522831,
+    "id": 123456,
+    "is_blocked": false,
+    "pro_expiration": false,
+    "reputation": 0,
+    "reputation_name": "Neutral",
+    "url": "testuser",
+    "user_follow": Object {
+      "status": false,
+    },
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getBaseInfo tests getBaseInfo calls the correct endpoint and resolves when using account_id 1`] = `
+Object {
+  "data": Object {
+    "avatar": "https://imgur.com/user/testuser/avatar?maxwidth=290",
+    "avatar_name": "default/T",
+    "bio": null,
+    "cover": "https://imgur.com/user/testuser/cover?maxwidth=2560",
+    "cover_name": "default/1-space",
+    "created": 1310522831,
+    "id": 123456,
+    "is_blocked": false,
+    "pro_expiration": false,
+    "reputation": 0,
+    "reputation_name": "Neutral",
+    "url": "testuser",
+    "user_follow": Object {
+      "status": false,
+    },
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getBlockStatus tests getBlockStatus calls the correct endpoint and resolves 1`] = `
+Object {
+  "data": Object {
+    "blocked": false,
+  },
+}
+`;
+
+exports[`getBlocks tests getBlocks calls the correct endpoint and resolves 1`] = `
+Object {
+  "data": Object {
+    "items": Array [],
+    "next": null,
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getImages calls the correct endpoint using defaults and resolves 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "account_id": 123456,
+      "account_url": "testuser",
+      "ad_type": 0,
+      "ad_url": "",
+      "animated": true,
+      "bandwidth": 0,
+      "datetime": 1529788737,
+      "deletehash": "abcdefg",
+      "description": null,
+      "favorite": false,
+      "gifv": "https://i.imgur.com/qsRxU1f.gifv",
+      "has_sound": false,
+      "height": 497,
+      "hls": "https://i.imgur.com/qsRxU1f.m3u8",
+      "id": "qsRxU1f",
+      "in_gallery": false,
+      "in_most_viral": false,
+      "is_ad": false,
+      "link": "https://i.imgur.com/qsRxU1f.gif",
+      "looping": true,
+      "mp4": "https://i.imgur.com/qsRxU1f.mp4",
+      "mp4_size": 0,
+      "name": null,
+      "nsfw": null,
+      "section": null,
+      "size": 852367,
+      "tags": Array [],
+      "title": null,
+      "type": "image/gif",
+      "views": 0,
+      "vote": null,
+      "width": 350,
+    },
+    Object {
+      "account_id": 123456,
+      "account_url": "testuser",
+      "ad_type": 0,
+      "ad_url": "",
+      "animated": true,
+      "bandwidth": 0,
+      "datetime": 1529786616,
+      "deletehash": "abcdefg",
+      "description": null,
+      "favorite": false,
+      "gifv": "https://i.imgur.com/qEtPGdm.gifv",
+      "has_sound": false,
+      "height": 497,
+      "hls": "https://i.imgur.com/qEtPGdm.m3u8",
+      "id": "qEtPGdm",
+      "in_gallery": false,
+      "in_most_viral": false,
+      "is_ad": false,
+      "link": "https://i.imgur.com/qEtPGdm.gif",
+      "looping": true,
+      "mp4": "https://i.imgur.com/qEtPGdm.mp4",
+      "mp4_size": 0,
+      "name": null,
+      "nsfw": null,
+      "section": null,
+      "size": 852367,
+      "tags": Array [],
+      "title": null,
+      "type": "image/gif",
+      "views": 0,
+      "vote": null,
+      "width": 350,
+    },
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getImages calls the correct endpoint with username specified and resolves 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "account_id": 123456,
+      "account_url": "testuser",
+      "ad_type": 0,
+      "ad_url": "",
+      "animated": true,
+      "bandwidth": 0,
+      "datetime": 1529788737,
+      "deletehash": "abcdefg",
+      "description": null,
+      "favorite": false,
+      "gifv": "https://i.imgur.com/qsRxU1f.gifv",
+      "has_sound": false,
+      "height": 497,
+      "hls": "https://i.imgur.com/qsRxU1f.m3u8",
+      "id": "qsRxU1f",
+      "in_gallery": false,
+      "in_most_viral": false,
+      "is_ad": false,
+      "link": "https://i.imgur.com/qsRxU1f.gif",
+      "looping": true,
+      "mp4": "https://i.imgur.com/qsRxU1f.mp4",
+      "mp4_size": 0,
+      "name": null,
+      "nsfw": null,
+      "section": null,
+      "size": 852367,
+      "tags": Array [],
+      "title": null,
+      "type": "image/gif",
+      "views": 0,
+      "vote": null,
+      "width": 350,
+    },
+    Object {
+      "account_id": 123456,
+      "account_url": "testuser",
+      "ad_type": 0,
+      "ad_url": "",
+      "animated": true,
+      "bandwidth": 0,
+      "datetime": 1529786616,
+      "deletehash": "abcdefg",
+      "description": null,
+      "favorite": false,
+      "gifv": "https://i.imgur.com/qEtPGdm.gifv",
+      "has_sound": false,
+      "height": 497,
+      "hls": "https://i.imgur.com/qEtPGdm.m3u8",
+      "id": "qEtPGdm",
+      "in_gallery": false,
+      "in_most_viral": false,
+      "is_ad": false,
+      "link": "https://i.imgur.com/qEtPGdm.gif",
+      "looping": true,
+      "mp4": "https://i.imgur.com/qEtPGdm.mp4",
+      "mp4_size": 0,
+      "name": null,
+      "nsfw": null,
+      "section": null,
+      "size": 852367,
+      "tags": Array [],
+      "title": null,
+      "type": "image/gif",
+      "views": 0,
+      "vote": null,
+      "width": 350,
+    },
+  ],
+  "status": 200,
+  "success": true,
+}
+`;

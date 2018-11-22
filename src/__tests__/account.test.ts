@@ -1,5 +1,6 @@
 jest.mock('node-fetch', () => jest.fn(() => Promise.resolve()));
 const fetch = require.requireMock('node-fetch');
+const { Response } = require.requireActual('node-fetch');
 
 import {
   generateAccessToken,
@@ -24,28 +25,21 @@ import {
 import { URLSearchParams } from 'url';
 
 afterEach(() => {
-  fetch.mockClear();
+  fetch.mockReset();
 });
 
 describe('getAccessToken tests', () => {
-  test('getAccessToken returns a resolved Promise on success', async () => {
+  test('getAccessToken calls the correct endpoint and resolves', async () => {
     const credentials = {
       refreshToken: 'myRefreshToken',
       clientId: 'myId',
       clientSecret: 'mySecret',
     };
 
-    await expect(generateAccessToken(credentials)).resolves.toBe(undefined);
-  });
-
-  test('getAccessToken calls the correct endpoint', async () => {
-    const credentials = {
-      refreshToken: 'myRefreshToken',
-      clientId: 'myId',
-      clientSecret: 'mySecret',
-    };
-
-    await generateAccessToken(credentials);
+    const mockResponse = JSON.stringify(
+      require('../__fixtures__/generateAccessTokenResponse.json'),
+    );
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedParams = new URLSearchParams();
     expectedParams.append('refresh_token', credentials.refreshToken);
@@ -53,6 +47,7 @@ describe('getAccessToken tests', () => {
     expectedParams.append('client_secret', credentials.clientSecret);
     expectedParams.append('grant_type', 'refresh_token');
 
+    await expect(generateAccessToken(credentials)).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(OAUTH2_TOKEN_ENDPOINT, {
       body: expectedParams,
@@ -62,19 +57,14 @@ describe('getAccessToken tests', () => {
 });
 
 describe('getBaseInfo tests', () => {
-  test('base returns a resolved Promise on success', async () => {
+  test('getBaseInfo calls the correct endpoint and resolves', async () => {
     const username = 'myUsername';
     const clientId = 'myClientId';
 
-    await expect(getBaseInfo({ username, clientId })).resolves.toBe(undefined);
-  });
+    const mockResponse = JSON.stringify(require('../__fixtures__/accountBaseResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
-  test('getBaseInfo calls the correct endpoint', async () => {
-    const username = 'myUsername';
-    const clientId = 'myClientId';
-
-    await getBaseInfo({ username, clientId });
-
+    await expect(getBaseInfo({ username, clientId })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(`${ACCOUNT_ENDPOINT}/${username}`, {
       headers: {
@@ -84,12 +74,14 @@ describe('getBaseInfo tests', () => {
     });
   });
 
-  test('getBaseInfo calls the correct endpoint when using account_id', async () => {
+  test('getBaseInfo calls the correct endpoint and resolves when using account_id', async () => {
     const accountId = '1234';
     const clientId = 'myClientId';
 
-    await getBaseInfo({ clientId, accountId });
+    const mockResponse = JSON.stringify(require('../__fixtures__/accountBaseResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
+    await expect(getBaseInfo({ accountId, clientId })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(`${ACCOUNT_ENDPOINT}/?account_id=${accountId}`, {
       headers: {
@@ -101,18 +93,14 @@ describe('getBaseInfo tests', () => {
 });
 
 describe('getBlockStatus tests', () => {
-  test('getBlockStatus returns a resolved Promise on success', async () => {
+  test('getBlockStatus calls the correct endpoint and resolves', async () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await expect(getBlockStatus({ username, accessToken })).resolves.toBe(undefined);
-  });
+    const mockResponse = JSON.stringify(require('../__fixtures__/getBlockStatusResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
-  test('getBlockStatus calls the correct endpoint', async () => {
-    const username = 'myUsername';
-    const accessToken = 'myAccessToken';
-
-    await getBlockStatus({ username, accessToken });
+    await expect(getBlockStatus({ username, accessToken })).resolves.toMatchSnapshot();
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(`${BLOCK_STATUS_ENDPOINT.replace('<username>', username)}`, {
@@ -125,16 +113,13 @@ describe('getBlockStatus tests', () => {
 });
 
 describe('getBlocks tests', () => {
-  test('getBlocks returns a resolved Promise on success', async () => {
+  test('getBlocks calls the correct endpoint and resolves', async () => {
     const accessToken = 'myAccessToken';
 
-    await expect(getBlocks(accessToken)).resolves.toBe(undefined);
-  });
+    const mockResponse = JSON.stringify(require('../__fixtures__/getBlocksResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
-  test('getBlocks calls the correct endpoint', async () => {
-    const accessToken = 'myAccessToken';
-
-    await getBlocks(accessToken);
+    await expect(getBlocks(accessToken)).resolves.toMatchSnapshot();
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(BLOCKS_ENDPOINT, {
@@ -147,18 +132,14 @@ describe('getBlocks tests', () => {
 });
 
 describe('createBlock tests', () => {
-  test('createBlock returns a resolved Promise on success', async () => {
-    const username = 'myUsername';
-    const accessToken = 'myAccessToken';
-
-    await expect(createBlock({ username, accessToken })).resolves.toBe(undefined);
-  });
-
   test('createBlock calls the correct endpoint', async () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await createBlock({ username, accessToken });
+    const mockResponse = JSON.stringify(require('../__fixtures__/createBlockResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    await expect(createBlock({ username, accessToken })).resolves.toMatchSnapshot();
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
@@ -174,18 +155,14 @@ describe('createBlock tests', () => {
 });
 
 describe('deleteBlock tests', () => {
-  test('deleteBlock returns a resolved Promise on success', async () => {
-    const username = 'myUsername';
-    const accessToken = 'myAccessToken';
-
-    await expect(deleteBlock({ username, accessToken })).resolves.toBe(undefined);
-  });
-
   test('deleteBlock calls the correct endpoint', async () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await deleteBlock({ username, accessToken });
+    const mockResponse = JSON.stringify(require('../__fixtures__/deleteBlockResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    await expect(deleteBlock({ username, accessToken })).resolves.toMatchSnapshot();
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
@@ -201,18 +178,15 @@ describe('deleteBlock tests', () => {
 });
 
 describe('getImages tests', () => {
-  test('getImages returns a resolved Promise on success', async () => {
+  test('getImages calls the correct endpoint using defaults and resolves', async () => {
     const accessToken = 'myAccessToken';
 
-    await expect(getImages({ accessToken })).resolves.toBe(undefined);
-  });
-
-  test('getImages calls the correct endpoint using defaults', async () => {
-    const accessToken = 'myAccessToken';
-
-    await getImages({ accessToken });
+    const mockResponse = JSON.stringify(require('../__fixtures__/getImagesResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedEndpoint = IMAGES_ENDPOINT.replace('<username>', 'me');
+
+    await expect(getImages({ accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
@@ -222,13 +196,16 @@ describe('getImages tests', () => {
     });
   });
 
-  test('getImages calls the correct endpoint with username specified', async () => {
+  test('getImages calls the correct endpoint with username specified and resolves', async () => {
     const accessToken = 'myAccessToken';
     const username = 'testuser';
 
-    await getImages({ accessToken, username });
+    const mockResponse = JSON.stringify(require('../__fixtures__/getImagesResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedEndpoint = IMAGES_ENDPOINT.replace('<username>', username);
+
+    await expect(getImages({ accessToken, username })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
