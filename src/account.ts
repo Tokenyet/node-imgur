@@ -27,7 +27,7 @@ const FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/favorites
  * Get an access token
  * @param data IAccessTokenRequestData
  */
-function getAccessToken(data: IAccessTokenRequestData): Promise<any> {
+function generateAccessToken(data: IAccessTokenRequestData): Promise<any> {
   const { refreshToken, clientId, clientSecret } = data;
 
   const params = new URLSearchParams();
@@ -154,7 +154,7 @@ export {
   IMAGES_ENDPOINT,
   GALLERY_FAVORITES_ENDPOINT,
   FAVORITES_ENDPOINT,
-  getAccessToken,
+  generateAccessToken,
   getBaseInfo,
   getBlockStatus,
   getBlocks,

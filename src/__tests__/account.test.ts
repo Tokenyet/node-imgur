@@ -2,7 +2,7 @@ jest.mock('node-fetch', () => jest.fn(() => Promise.resolve()));
 const fetch = require.requireMock('node-fetch');
 
 import {
-  getAccessToken,
+  generateAccessToken,
   getBaseInfo,
   getBlockStatus,
   getBlocks,
@@ -35,7 +35,7 @@ describe('getAccessToken tests', () => {
       clientSecret: 'mySecret',
     };
 
-    await expect(getAccessToken(credentials)).resolves.toBe(undefined);
+    await expect(generateAccessToken(credentials)).resolves.toBe(undefined);
   });
 
   test('getAccessToken calls the correct endpoint', async () => {
@@ -45,7 +45,7 @@ describe('getAccessToken tests', () => {
       clientSecret: 'mySecret',
     };
 
-    await getAccessToken(credentials);
+    await generateAccessToken(credentials);
 
     const expectedParams = new URLSearchParams();
     expectedParams.append('refresh_token', credentials.refreshToken);
