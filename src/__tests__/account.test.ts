@@ -1,6 +1,10 @@
-jest.mock('node-fetch', () => jest.fn(() => Promise.resolve()));
-const fetch = require.requireMock('node-fetch');
+// We use the real `Response` constructor from the actual node-fetch module
 const { Response } = require.requireActual('node-fetch');
+// And then mock `fetch` going forward using `Response` and mock data
+jest.mock('node-fetch', () =>
+  jest.fn(() => Promise.resolve(new Response('{"data": [], "status": 200, "success": true}'))),
+);
+const fetch = require.requireMock('node-fetch');
 
 import {
   generateAccessToken,
@@ -12,6 +16,7 @@ import {
   getImages,
   getGalleryFavorites,
   getFavorites,
+  getSubmissions,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -20,6 +25,7 @@ import {
   IMAGES_ENDPOINT,
   GALLERY_FAVORITES_ENDPOINT,
   FAVORITES_ENDPOINT,
+  SUBMISSIONS_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -302,6 +308,45 @@ describe('getImages tests', () => {
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getSubmissions calls the correct endpoint with defaults', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getSubmissionsResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = SUBMISSIONS_ENDPOINT.replace('<username>', username);
+
+    await expect(getSubmissions({ username, clientId })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getSubmissions calls the correct endpoint with options', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+    const page = 2;
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getSubmissionsResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${SUBMISSIONS_ENDPOINT.replace('<username>', username)}/${page}`;
+
+    await expect(getSubmissions({ username, clientId, page })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
       },
       method: 'GET',
     });

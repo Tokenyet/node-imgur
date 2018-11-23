@@ -6,6 +6,7 @@ import {
   IAccountImagesOptions,
   IGalleryFavoritesOptions,
   IFavoritesOptions,
+  ISubmissionOptions,
 } from './types';
 import { URLSearchParams } from 'url';
 
@@ -22,6 +23,8 @@ const IMAGES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/images';
 const GALLERY_FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/gallery_favorites';
 
 const FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/favorites';
+
+const SUBMISSIONS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/submissions';
 
 /**
  * Get an access token
@@ -163,6 +166,24 @@ async function getFavorites(options: IFavoritesOptions) {
   return await response.json();
 }
 
+async function getSubmissions(options: ISubmissionOptions) {
+  const { username, clientId, page } = options;
+  let endpoint = SUBMISSIONS_ENDPOINT.replace('<username>', username);
+
+  if (options.page) {
+    endpoint = `${endpoint}/${options.page}`;
+  }
+
+  const response = await fetch(endpoint, {
+    headers: {
+      Authorization: `Client-ID ${clientId}`,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -172,6 +193,7 @@ export {
   IMAGES_ENDPOINT,
   GALLERY_FAVORITES_ENDPOINT,
   FAVORITES_ENDPOINT,
+  SUBMISSIONS_ENDPOINT,
   generateAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -181,4 +203,5 @@ export {
   getImages,
   getGalleryFavorites,
   getFavorites,
+  getSubmissions,
 };

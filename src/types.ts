@@ -34,6 +34,12 @@ interface IFavoritesOptions {
   sort?: string;
 }
 
+interface ISubmissionOptions {
+  clientId: string;
+  username: string;
+  page?: number;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -41,4 +47,5 @@ export {
   IAccountImagesOptions,
   IGalleryFavoritesOptions,
   IFavoritesOptions,
+  ISubmissionOptions,
 };

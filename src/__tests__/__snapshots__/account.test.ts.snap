@@ -280,3 +280,19 @@ Object {
   "success": true,
 }
 `;
+
+exports[`getImages tests getSubmissions calls the correct endpoint with defaults 1`] = `
+Object {
+  "data": Array [],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getSubmissions calls the correct endpoint with options 1`] = `
+Object {
+  "data": Array [],
+  "status": 200,
+  "success": true,
+}
+`;
