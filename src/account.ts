@@ -121,7 +121,7 @@ async function getImages({ accessToken, username = 'me' }: IAccountImagesOptions
   return await response.json();
 }
 
-function getGalleryFavorites(options: IGalleryFavoritesOptions) {
+async function getGalleryFavorites(options: IGalleryFavoritesOptions) {
   const { username, clientId } = options;
   let endpoint = GALLERY_FAVORITES_ENDPOINT.replace('<username>', username);
 
@@ -132,15 +132,17 @@ function getGalleryFavorites(options: IGalleryFavoritesOptions) {
     }
   }
 
-  return fetch(endpoint, {
+  const response = await fetch(endpoint, {
     headers: {
       Authorization: `Client-ID ${clientId}`,
     },
     method: 'GET',
   });
+
+  return await response.json();
 }
 
-function getFavorites(options: IFavoritesOptions) {
+async function getFavorites(options: IFavoritesOptions) {
   const { username, accessToken } = options;
   let endpoint = FAVORITES_ENDPOINT.replace('<username>', username);
 
@@ -151,12 +153,14 @@ function getFavorites(options: IFavoritesOptions) {
     }
   }
 
-  return fetch(endpoint, {
+  const response = await fetch(endpoint, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'GET',
   });
+
+  return await response.json();
 }
 
 export {

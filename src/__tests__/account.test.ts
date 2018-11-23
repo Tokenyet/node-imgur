@@ -219,9 +219,14 @@ describe('getImages tests', () => {
     const username = 'myUsername';
     const clientId = 'myClientId';
 
-    await getGalleryFavorites({ username, clientId });
+    const mockResponse = JSON.stringify(
+      require('../__fixtures__/getGalleryFavoritesResponse.json'),
+    );
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedEndpoint = GALLERY_FAVORITES_ENDPOINT.replace('<username>', username);
+
+    await expect(getGalleryFavorites({ username, clientId })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
@@ -237,12 +242,19 @@ describe('getImages tests', () => {
     const page = 2;
     const favoriteSort = 'oldest';
 
-    await getGalleryFavorites({ username, clientId, page, favoriteSort });
+    const mockResponse = JSON.stringify(
+      require('../__fixtures__/getGalleryFavoritesResponse.json'),
+    );
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedEndpoint = `${GALLERY_FAVORITES_ENDPOINT.replace(
       '<username>',
       username,
     )}/${page}/${favoriteSort}`;
+
+    await expect(
+      getGalleryFavorites({ username, clientId, page, favoriteSort }),
+    ).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
@@ -256,9 +268,12 @@ describe('getImages tests', () => {
     const username = 'myUsername';
     const accessToken = 'myAccessToken';
 
-    await getFavorites({ username, accessToken });
+    const mockResponse = JSON.stringify(require('../__fixtures__/getFavoritesResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedEndpoint = FAVORITES_ENDPOINT.replace('<username>', username);
+
+    await expect(getFavorites({ username, accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
@@ -274,12 +289,15 @@ describe('getImages tests', () => {
     const page = 2;
     const sort = 'oldest';
 
-    await getFavorites({ username, accessToken, page, sort });
+    const mockResponse = JSON.stringify(require('../__fixtures__/getFavoritesResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
     const expectedEndpoint = `${FAVORITES_ENDPOINT.replace(
       '<username>',
       username,
     )}/${page}/${sort}`;
+
+    await expect(getFavorites({ username, accessToken, page, sort })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {

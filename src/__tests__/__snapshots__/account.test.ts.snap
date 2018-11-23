@@ -95,6 +95,38 @@ Object {
 }
 `;
 
+exports[`getImages tests getFavorites calls the correct endpoint with defaults 1`] = `
+Object {
+  "data": Array [],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getFavorites calls the correct endpoint with options 1`] = `
+Object {
+  "data": Array [],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getGalleryFavorites calls the correct endpoint with defaults 1`] = `
+Object {
+  "data": Array [],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getGalleryFavorites calls the correct endpoint with options 1`] = `
+Object {
+  "data": Array [],
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getImages calls the correct endpoint using defaults and resolves 1`] = `
 Object {
   "data": Array [
