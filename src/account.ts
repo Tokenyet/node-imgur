@@ -235,6 +235,25 @@ async function getSettings(options: ISettingsOptions) {
   return await response.json();
 }
 
+async function changeSettings(options: ISettingsOptions) {
+  const { accessToken, ...settings } = options;
+
+  const params = new URLSearchParams();
+  for (const setting of Object.keys(settings)) {
+    params.append(setting, settings[setting]);
+  }
+
+  const response = await fetch(SETTINGS_ENDPOINT, {
+    body: params,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'POST',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -261,4 +280,5 @@ export {
   getAvailableAvatars,
   getAvatar,
   getSettings,
+  changeSettings,
 };

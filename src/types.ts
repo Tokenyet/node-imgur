@@ -53,6 +53,15 @@ interface IAvatarOptions {
 
 interface ISettingsOptions {
   accessToken: string;
+  bio?: string;
+  public_images?: string;
+  messaging_enabled?: boolean;
+  album_privacy?: string;
+  accepted_gallery_terms?: boolean;
+  username?: string;
+  show_mature?: boolean;
+  newsletter_subscribed?: boolean;
+  [propName: string]: any;
 }
 
 export {

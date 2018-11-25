@@ -20,6 +20,7 @@ import {
   getAvailableAvatars,
   getAvatar,
   getSettings,
+  changeSettings,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -432,6 +433,31 @@ describe('getImages tests', () => {
         Authorization: `Bearer ${accessToken}`,
       },
       method: 'GET',
+    });
+  });
+
+  test('changeSettings calls the correct endpoint', async () => {
+    const settings = {
+      accessToken: 'accessToken',
+      bio: 'Professional Meme Generator',
+      album_privacy: 'hidden',
+    };
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/changeSettingsResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedParams = new URLSearchParams();
+    expectedParams.append('bio', settings.bio);
+    expectedParams.append('album_privacy', settings.album_privacy);
+
+    await expect(changeSettings({ ...settings })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(SETTINGS_ENDPOINT, {
+      body: expectedParams,
+      headers: {
+        Authorization: `Bearer ${settings.accessToken}`,
+      },
+      method: 'POST',
     });
   });
 });
