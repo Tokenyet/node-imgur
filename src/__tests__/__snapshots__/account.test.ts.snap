@@ -235,6 +235,26 @@ Object {
 }
 `;
 
+exports[`getImages tests getAlbumsIds calls the correct endpoint when authed 1`] = `
+Object {
+  "data": Array [
+    "abc123",
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getAlbumsIds calls the correct endpoint when unauthed 1`] = `
+Object {
+  "data": Array [
+    "abc123",
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getAvailableAvatars calls the correct endpoint when authed 1`] = `
 Object {
   "data": Object {

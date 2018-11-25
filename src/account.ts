@@ -14,9 +14,9 @@ import {
   IVerifyEmailOptions,
   IAlbumsOptions,
   IAlbumOptions,
+  IAlbumIdsOptions,
 } from './types';
 import { URLSearchParams } from 'url';
-import { access } from 'fs';
 
 const OAUTH2_TOKEN_ENDPOINT = 'https://api.imgur.com/oauth2/token';
 
@@ -47,6 +47,8 @@ const VERIFY_EMAIL_ENDPOINT = 'https://api.imgur.com/3/account/<username>/verify
 const ALBUMS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/albums';
 
 const ALBUM_ENDPOINT = 'https://api.imgur.com/3/account/<username>/album';
+
+const ALBUM_IDS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/albums/ids';
 
 /**
  * Get an access token
@@ -337,6 +339,24 @@ async function getAlbum(options: IAlbumOptions) {
   return await response.json();
 }
 
+async function getAlbumIds(options: IAlbumIdsOptions) {
+  const { accessToken, clientId, username, page } = options;
+  let endpoint = ALBUM_IDS_ENDPOINT.replace('<username>', username);
+
+  if (page) {
+    endpoint = `${endpoint}/${page}`;
+  }
+
+  const response = await fetch(endpoint, {
+    headers: {
+      Authorization: accessToken ? `Bearer ${accessToken}` : `Client-ID ${clientId}`,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -354,6 +374,7 @@ export {
   VERIFY_EMAIL_ENDPOINT,
   ALBUMS_ENDPOINT,
   ALBUM_ENDPOINT,
+  ALBUM_IDS_ENDPOINT,
   generateAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -373,4 +394,5 @@ export {
   sendVerificationEmail,
   getAlbums,
   getAlbum,
+  getAlbumIds,
 };

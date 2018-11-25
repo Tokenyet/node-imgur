@@ -26,6 +26,7 @@ import {
   sendVerificationEmail,
   getAlbums,
   getAlbum,
+  getAlbumIds,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -42,6 +43,7 @@ import {
   VERIFY_EMAIL_ENDPOINT,
   ALBUMS_ENDPOINT,
   ALBUM_ENDPOINT,
+  ALBUM_IDS_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -579,6 +581,45 @@ describe('getImages tests', () => {
     const expectedEndpoint = `${ALBUM_ENDPOINT.replace('<username>', username)}/${albumHash}`;
 
     await expect(getAlbum({ username, accessToken, albumHash })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAlbumsIds calls the correct endpoint when unauthed', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+    const page = 2;
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getAlbumIdsResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${ALBUM_IDS_ENDPOINT.replace('<username>', username)}/${page}`;
+
+    await expect(getAlbumIds({ username, clientId, page })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAlbumsIds calls the correct endpoint when authed', async () => {
+    const username = 'myUsername';
+    const accessToken = 'accessToken';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getAlbumIdsResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${ALBUM_IDS_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getAlbumIds({ username, accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {

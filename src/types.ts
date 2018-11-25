@@ -90,6 +90,14 @@ interface IAlbumOptions {
   [propName: string]: any;
 }
 
+interface IAlbumIdsOptions {
+  accessToken?: string;
+  clientId?: string;
+  page?: number;
+  username: string;
+  [propName: string]: any;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -105,4 +113,5 @@ export {
   IVerifyEmailOptions,
   IAlbumsOptions,
   IAlbumOptions,
+  IAlbumIdsOptions,
 };
