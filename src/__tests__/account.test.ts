@@ -19,6 +19,7 @@ import {
   getSubmissions,
   getAvailableAvatars,
   getAvatar,
+  getSettings,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -30,6 +31,7 @@ import {
   SUBMISSIONS_ENDPOINT,
   AVAILABLE_AVATARS_ENDPOINT,
   AVATAR_ENDPOINT,
+  SETTINGS_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -410,6 +412,22 @@ describe('getImages tests', () => {
     await expect(getAvatar({ username, accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getSettings calls the correct endpoint', async () => {
+    const accessToken = 'accessToken';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getSettingsResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    await expect(getSettings({ accessToken })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(SETTINGS_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

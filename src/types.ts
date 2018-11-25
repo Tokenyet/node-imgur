@@ -51,6 +51,10 @@ interface IAvatarOptions {
   accessToken: string;
 }
 
+interface ISettingsOptions {
+  accessToken: string;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -61,4 +65,5 @@ export {
   ISubmissionOptions,
   IAvailableAvatarsOptions,
   IAvatarOptions,
+  ISettingsOptions,
 };

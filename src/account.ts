@@ -9,6 +9,7 @@ import {
   ISubmissionOptions,
   IAvailableAvatarsOptions,
   IAvatarOptions,
+  ISettingsOptions,
 } from './types';
 import { URLSearchParams } from 'url';
 import { access } from 'fs';
@@ -32,6 +33,8 @@ const SUBMISSIONS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/submiss
 const AVAILABLE_AVATARS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/available_avatars';
 
 const AVATAR_ENDPOINT = 'https://api.imgur.com/3/account/<username>/avatar';
+
+const SETTINGS_ENDPOINT = 'https://api.imgur.com/3/account/me/settings';
 
 /**
  * Get an access token
@@ -219,6 +222,19 @@ async function getAvatar(options: IAvatarOptions) {
   return await response.json();
 }
 
+async function getSettings(options: ISettingsOptions) {
+  const { accessToken } = options;
+
+  const response = await fetch(SETTINGS_ENDPOINT, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -231,6 +247,7 @@ export {
   SUBMISSIONS_ENDPOINT,
   AVAILABLE_AVATARS_ENDPOINT,
   AVATAR_ENDPOINT,
+  SETTINGS_ENDPOINT,
   generateAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -243,4 +260,5 @@ export {
   getSubmissions,
   getAvailableAvatars,
   getAvatar,
+  getSettings,
 };

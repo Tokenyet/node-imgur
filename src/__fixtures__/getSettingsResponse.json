@@ -1,0 +1,21 @@
+{
+  "data": {
+    "account_url": "testuser",
+    "email": "testuser@test.com",
+    "avatar": null,
+    "cover": null,
+    "public_images": false,
+    "album_privacy": "hidden",
+    "pro_expiration": false,
+    "accepted_gallery_terms": false,
+    "active_emails": [],
+    "messaging_enabled": true,
+    "comment_replies": true,
+    "blocked_users": [],
+    "show_mature": false,
+    "newsletter_subscribed": false,
+    "first_party": false
+  },
+  "success": true,
+  "status": 200
+}

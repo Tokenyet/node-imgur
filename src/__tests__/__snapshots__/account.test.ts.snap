@@ -366,6 +366,30 @@ Object {
 }
 `;
 
+exports[`getImages tests getSettings calls the correct endpoint 1`] = `
+Object {
+  "data": Object {
+    "accepted_gallery_terms": false,
+    "account_url": "testuser",
+    "active_emails": Array [],
+    "album_privacy": "hidden",
+    "avatar": null,
+    "blocked_users": Array [],
+    "comment_replies": true,
+    "cover": null,
+    "email": "testuser@test.com",
+    "first_party": false,
+    "messaging_enabled": true,
+    "newsletter_subscribed": false,
+    "pro_expiration": false,
+    "public_images": false,
+    "show_mature": false,
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getSubmissions calls the correct endpoint with defaults 1`] = `
 Object {
   "data": Array [],
