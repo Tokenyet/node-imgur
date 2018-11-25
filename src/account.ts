@@ -286,6 +286,19 @@ async function verifyEmail(options: IVerifyEmailOptions) {
   return await response.json();
 }
 
+async function sendVerificationEmail(options: IVerifyEmailOptions) {
+  const { accessToken, username } = options;
+
+  const response = await fetch(VERIFY_EMAIL_ENDPOINT.replace('<username>', username), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'POST',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -317,4 +330,5 @@ export {
   changeSettings,
   getGalleryProfile,
   verifyEmail,
+  sendVerificationEmail,
 };

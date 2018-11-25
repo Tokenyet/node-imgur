@@ -23,6 +23,7 @@ import {
   changeSettings,
   getGalleryProfile,
   verifyEmail,
+  sendVerificationEmail,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -500,6 +501,27 @@ describe('getImages tests', () => {
         Authorization: `Bearer ${accessToken}`,
       },
       method: 'GET',
+    });
+  });
+
+  test('sendVerificationEmail calls the correct endpoint', async () => {
+    const accessToken = 'accessToken';
+    const username = 'myUsername';
+
+    const mockResponse = JSON.stringify(
+      require('../__fixtures__/sendVerificationEmailResponse.json'),
+    );
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${VERIFY_EMAIL_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(sendVerificationEmail({ accessToken, username })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'POST',
     });
   });
 });
