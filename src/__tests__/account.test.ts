@@ -466,14 +466,17 @@ describe('getImages tests', () => {
   });
 
   test('getGalleryProfile calls the correct endpoint', async () => {
-    const accessToken = 'accessToken';
+    const accessToken = 'myAccessToken';
+    const username = 'myUsername';
 
     const mockResponse = JSON.stringify(require('../__fixtures__/getGalleryProfileResponse.json'));
     fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
-    await expect(getGalleryProfile({ accessToken })).resolves.toMatchSnapshot();
+    const expectedEndpoint = `${GALLERY_PROFILE_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getGalleryProfile({ accessToken, username })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(GALLERY_PROFILE_ENDPOINT, {
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -488,9 +491,11 @@ describe('getImages tests', () => {
     const mockResponse = JSON.stringify(require('../__fixtures__/verifyEmailResponse.json'));
     fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
 
+    const expectedEndpoint = `${VERIFY_EMAIL_ENDPOINT.replace('<username>', username)}`;
+
     await expect(verifyEmail({ accessToken, username })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(VERIFY_EMAIL_ENDPOINT.replace('<username>', username), {
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

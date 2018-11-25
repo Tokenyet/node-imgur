@@ -261,9 +261,9 @@ async function changeSettings(options: ISettingsOptions) {
 }
 
 async function getGalleryProfile(options: IGalleryProfileOptions) {
-  const { accessToken } = options;
+  const { accessToken, username } = options;
 
-  const response = await fetch(GALLERY_PROFILE_ENDPOINT, {
+  const response = await fetch(GALLERY_PROFILE_ENDPOINT.replace('<username>', username), {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
