@@ -21,6 +21,7 @@ import {
   getAvatar,
   getSettings,
   changeSettings,
+  getGalleryProfile,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -33,6 +34,7 @@ import {
   AVAILABLE_AVATARS_ENDPOINT,
   AVATAR_ENDPOINT,
   SETTINGS_ENDPOINT,
+  GALLERY_PROFILE_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -458,6 +460,22 @@ describe('getImages tests', () => {
         Authorization: `Bearer ${settings.accessToken}`,
       },
       method: 'POST',
+    });
+  });
+
+  test('getGalleryProfile calls the correct endpoint', async () => {
+    const accessToken = 'accessToken';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getGalleryProfileResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    await expect(getGalleryProfile({ accessToken })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(GALLERY_PROFILE_ENDPOINT, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
     });
   });
 });

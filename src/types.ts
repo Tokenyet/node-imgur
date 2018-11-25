@@ -64,6 +64,11 @@ interface ISettingsOptions {
   [propName: string]: any;
 }
 
+interface IGalleryProfileOptions {
+  accessToken: string;
+  [propName: string]: any;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -75,4 +80,5 @@ export {
   IAvailableAvatarsOptions,
   IAvatarOptions,
   ISettingsOptions,
+  IGalleryProfileOptions,
 };

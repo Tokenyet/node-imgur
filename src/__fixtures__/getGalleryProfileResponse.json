@@ -1,0 +1,23 @@
+{
+  "data": {
+    "trophies": [
+      {
+        "id": 123456,
+        "name": "Gone Mobile",
+        "name_clean": "GoneMobile",
+        "description": "Downloaded and used the Imgur app.",
+        "data": null,
+        "data_link": null,
+        "datetime": 1520782777,
+        "image": "https://s.imgur.com/images/trophies/gone_mobile.png",
+        "image_width": 512,
+        "image_height": 512
+      }
+    ],
+    "total_gallery_comments": 0,
+    "total_gallery_favorites": 0,
+    "total_gallery_submissions": 0
+  },
+  "success": true,
+  "status": 200
+}

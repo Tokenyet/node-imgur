@@ -220,6 +220,32 @@ Object {
 }
 `;
 
+exports[`getImages tests getGalleryProfile calls the correct endpoint 1`] = `
+Object {
+  "data": Object {
+    "total_gallery_comments": 0,
+    "total_gallery_favorites": 0,
+    "total_gallery_submissions": 0,
+    "trophies": Array [
+      Object {
+        "data": null,
+        "data_link": null,
+        "datetime": 1520782777,
+        "description": "Downloaded and used the Imgur app.",
+        "id": 123456,
+        "image": "https://s.imgur.com/images/trophies/gone_mobile.png",
+        "image_height": 512,
+        "image_width": 512,
+        "name": "Gone Mobile",
+        "name_clean": "GoneMobile",
+      },
+    ],
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getImages calls the correct endpoint using defaults and resolves 1`] = `
 Object {
   "data": Array [
