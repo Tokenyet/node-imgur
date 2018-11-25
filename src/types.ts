@@ -75,6 +75,14 @@ interface IVerifyEmailOptions {
   [propName: string]: any;
 }
 
+interface IAlbumsOptions {
+  accessToken?: string;
+  clientId?: string;
+  page?: number;
+  username: string;
+  [propName: string]: any;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -88,4 +96,5 @@ export {
   ISettingsOptions,
   IGalleryProfileOptions,
   IVerifyEmailOptions,
+  IAlbumsOptions,
 };

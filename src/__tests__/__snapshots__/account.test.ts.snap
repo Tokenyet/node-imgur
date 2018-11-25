@@ -103,6 +103,72 @@ Object {
 }
 `;
 
+exports[`getImages tests getAlbums calls the correct endpoint when authed 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "account_id": 123456,
+      "account_url": "testuser",
+      "cover": "123abc",
+      "cover_height": 50,
+      "cover_width": 50,
+      "datetime": 1316635797,
+      "deletehash": "1d22c41821cb4a3fake",
+      "description": null,
+      "favorite": false,
+      "id": "abc123",
+      "images_count": 22,
+      "in_gallery": false,
+      "include_album_ads": false,
+      "is_ad": false,
+      "layout": "grid",
+      "link": "https://imgur.com/a/abc123",
+      "nsfw": null,
+      "order": 0,
+      "privacy": "hidden",
+      "section": null,
+      "title": "My Album",
+      "views": 0,
+    },
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getAlbums calls the correct endpoint when unauthed 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "account_id": 123456,
+      "account_url": "testuser",
+      "cover": "123abc",
+      "cover_height": 50,
+      "cover_width": 50,
+      "datetime": 1316635797,
+      "deletehash": "1d22c41821cb4a3fake",
+      "description": null,
+      "favorite": false,
+      "id": "abc123",
+      "images_count": 22,
+      "in_gallery": false,
+      "include_album_ads": false,
+      "is_ad": false,
+      "layout": "grid",
+      "link": "https://imgur.com/a/abc123",
+      "nsfw": null,
+      "order": 0,
+      "privacy": "hidden",
+      "section": null,
+      "title": "My Album",
+      "views": 0,
+    },
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getAvailableAvatars calls the correct endpoint when authed 1`] = `
 Object {
   "data": Object {

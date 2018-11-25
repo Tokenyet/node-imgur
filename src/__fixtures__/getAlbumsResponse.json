@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "id": "abc123",
+      "title": "My Album",
+      "description": null,
+      "datetime": 1316635797,
+      "cover": "123abc",
+      "cover_width": 50,
+      "cover_height": 50,
+      "account_url": "testuser",
+      "account_id": 123456,
+      "privacy": "hidden",
+      "layout": "grid",
+      "views": 0,
+      "link": "https://imgur.com/a/abc123",
+      "favorite": false,
+      "nsfw": null,
+      "section": null,
+      "images_count": 22,
+      "in_gallery": false,
+      "is_ad": false,
+      "include_album_ads": false,
+      "deletehash": "1d22c41821cb4a3fake",
+      "order": 0
+    }
+  ],
+  "success": true,
+  "status": 200
+}
