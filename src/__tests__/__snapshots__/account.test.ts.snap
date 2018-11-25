@@ -103,6 +103,72 @@ Object {
 }
 `;
 
+exports[`getImages tests getAlbum calls the correct endpoint 1`] = `
+Object {
+  "data": Object {
+    "account_id": 123456,
+    "account_url": "testuser",
+    "cover": "sJIRJ",
+    "cover_height": 50,
+    "cover_width": 50,
+    "datetime": 1316635797,
+    "deletehash": "1d22c21578cb4a3fake",
+    "description": null,
+    "favorite": false,
+    "id": "abc123",
+    "images": Array [
+      Object {
+        "account_id": null,
+        "account_url": null,
+        "ad_type": 0,
+        "ad_url": "",
+        "animated": true,
+        "bandwidth": 0,
+        "datetime": 1316635799,
+        "deletehash": "7YHKnoqqihoIXcunfake",
+        "description": null,
+        "favorite": false,
+        "gifv": "https://i.imgur.com/321cba.gifv",
+        "has_sound": false,
+        "height": 50,
+        "hls": "https://i.imgur.com/321cba.m3u8",
+        "id": "321cba",
+        "in_gallery": false,
+        "in_most_viral": false,
+        "is_ad": false,
+        "link": "https://i.imgur.com/321cba.gif",
+        "looping": true,
+        "mp4": "https://i.imgur.com/321cba.mp4",
+        "mp4_size": 0,
+        "name": "happy",
+        "nsfw": null,
+        "section": null,
+        "size": 811,
+        "tags": Array [],
+        "title": null,
+        "type": "image/gif",
+        "views": 0,
+        "vote": null,
+        "width": 50,
+      },
+    ],
+    "images_count": 22,
+    "in_gallery": false,
+    "include_album_ads": true,
+    "is_ad": false,
+    "layout": "grid",
+    "link": "https://imgur.com/a/abc123",
+    "nsfw": true,
+    "privacy": "hidden",
+    "section": null,
+    "title": "My Album",
+    "views": 0,
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getAlbums calls the correct endpoint when authed 1`] = `
 Object {
   "data": Array [

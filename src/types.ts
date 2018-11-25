@@ -83,6 +83,13 @@ interface IAlbumsOptions {
   [propName: string]: any;
 }
 
+interface IAlbumOptions {
+  accessToken: string;
+  username: string;
+  albumHash: string;
+  [propName: string]: any;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -97,4 +104,5 @@ export {
   IGalleryProfileOptions,
   IVerifyEmailOptions,
   IAlbumsOptions,
+  IAlbumOptions,
 };

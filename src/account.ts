@@ -13,6 +13,7 @@ import {
   IGalleryProfileOptions,
   IVerifyEmailOptions,
   IAlbumsOptions,
+  IAlbumOptions,
 } from './types';
 import { URLSearchParams } from 'url';
 import { access } from 'fs';
@@ -44,6 +45,8 @@ const GALLERY_PROFILE_ENDPOINT = 'https://api.imgur.com/3/account/<username>/gal
 const VERIFY_EMAIL_ENDPOINT = 'https://api.imgur.com/3/account/<username>/verifyemail';
 
 const ALBUMS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/albums';
+
+const ALBUM_ENDPOINT = 'https://api.imgur.com/3/account/<username>/album';
 
 /**
  * Get an access token
@@ -320,6 +323,20 @@ async function getAlbums(options: IAlbumsOptions) {
   return await response.json();
 }
 
+async function getAlbum(options: IAlbumOptions) {
+  const { accessToken, username, albumHash } = options;
+  const endpoint = `${ALBUM_ENDPOINT.replace('<username>', username)}/${albumHash}`;
+
+  const response = await fetch(endpoint, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -336,6 +353,7 @@ export {
   GALLERY_PROFILE_ENDPOINT,
   VERIFY_EMAIL_ENDPOINT,
   ALBUMS_ENDPOINT,
+  ALBUM_ENDPOINT,
   generateAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -354,4 +372,5 @@ export {
   verifyEmail,
   sendVerificationEmail,
   getAlbums,
+  getAlbum,
 };

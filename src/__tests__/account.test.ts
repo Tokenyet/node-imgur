@@ -25,6 +25,7 @@ import {
   verifyEmail,
   sendVerificationEmail,
   getAlbums,
+  getAlbum,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -40,6 +41,7 @@ import {
   GALLERY_PROFILE_ENDPOINT,
   VERIFY_EMAIL_ENDPOINT,
   ALBUMS_ENDPOINT,
+  ALBUM_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -557,6 +559,26 @@ describe('getImages tests', () => {
     const expectedEndpoint = `${ALBUMS_ENDPOINT.replace('<username>', username)}`;
 
     await expect(getAlbums({ username, accessToken })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAlbum calls the correct endpoint', async () => {
+    const username = 'myUsername';
+    const accessToken = 'accessToken';
+    const albumHash = 'abc123';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getAlbumResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${ALBUM_ENDPOINT.replace('<username>', username)}/${albumHash}`;
+
+    await expect(getAlbum({ username, accessToken, albumHash })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
