@@ -18,6 +18,7 @@ import {
   getFavorites,
   getSubmissions,
   getAvailableAvatars,
+  getAvatar,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -28,6 +29,7 @@ import {
   FAVORITES_ENDPOINT,
   SUBMISSIONS_ENDPOINT,
   AVAILABLE_AVATARS_ENDPOINT,
+  AVATAR_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -387,6 +389,25 @@ describe('getImages tests', () => {
     const expectedEndpoint = `${AVAILABLE_AVATARS_ENDPOINT.replace('<username>', username)}`;
 
     await expect(getAvailableAvatars({ username, accessToken })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAvatar calls the correct endpoint', async () => {
+    const accessToken = 'accessToken';
+    const username = 'myUsername';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getAvatarResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${AVATAR_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getAvatar({ username, accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {

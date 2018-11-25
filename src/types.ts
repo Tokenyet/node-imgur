@@ -46,6 +46,11 @@ interface IAvailableAvatarsOptions {
   clientId?: string;
 }
 
+interface IAvatarOptions {
+  username: string;
+  accessToken: string;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -55,4 +60,5 @@ export {
   IFavoritesOptions,
   ISubmissionOptions,
   IAvailableAvatarsOptions,
+  IAvatarOptions,
 };

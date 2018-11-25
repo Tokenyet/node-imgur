@@ -169,6 +169,17 @@ Object {
 }
 `;
 
+exports[`getImages tests getAvatar calls the correct endpoint 1`] = `
+Object {
+  "data": Object {
+    "avatar": "https://imgur.com/user/testuser/avatar?maxwidth=290",
+    "avatar_name": "default/T",
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getFavorites calls the correct endpoint with defaults 1`] = `
 Object {
   "data": Array [],
