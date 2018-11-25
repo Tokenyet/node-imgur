@@ -7,8 +7,10 @@ import {
   IGalleryFavoritesOptions,
   IFavoritesOptions,
   ISubmissionOptions,
+  IAvailableAvatarsOptions,
 } from './types';
 import { URLSearchParams } from 'url';
+import { access } from 'fs';
 
 const OAUTH2_TOKEN_ENDPOINT = 'https://api.imgur.com/oauth2/token';
 
@@ -25,6 +27,8 @@ const GALLERY_FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/g
 const FAVORITES_ENDPOINT = 'https://api.imgur.com/3/account/<username>/favorites';
 
 const SUBMISSIONS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/submissions';
+
+const AVAILABLE_AVATARS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/available_avatars';
 
 /**
  * Get an access token
@@ -184,6 +188,20 @@ async function getSubmissions(options: ISubmissionOptions) {
   return await response.json();
 }
 
+async function getAvailableAvatars(options: IAvailableAvatarsOptions) {
+  const { accessToken, clientId, username } = options;
+  const endpoint = AVAILABLE_AVATARS_ENDPOINT.replace('<username>', username);
+
+  const response = await fetch(endpoint, {
+    headers: {
+      Authorization: accessToken ? `Bearer ${accessToken}` : `Client-ID ${clientId}`,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -194,6 +212,7 @@ export {
   GALLERY_FAVORITES_ENDPOINT,
   FAVORITES_ENDPOINT,
   SUBMISSIONS_ENDPOINT,
+  AVAILABLE_AVATARS_ENDPOINT,
   generateAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -204,4 +223,5 @@ export {
   getGalleryFavorites,
   getFavorites,
   getSubmissions,
+  getAvailableAvatars,
 };

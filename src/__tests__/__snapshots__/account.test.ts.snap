@@ -95,6 +95,80 @@ Object {
 }
 `;
 
+exports[`getImages tests getAvailableAvatars calls the correct endpoint when authed 1`] = `
+Object {
+  "data": Object {
+    "available_avatars": Array [
+      Object {
+        "location": "https://i.imgur.com/QmC4NzH_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/3D",
+      },
+      Object {
+        "location": "https://i.imgur.com/f8wFE2Q_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/avocado",
+      },
+      Object {
+        "location": "https://i.imgur.com/5IB1Gxc_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/bear",
+      },
+      Object {
+        "location": "https://i.imgur.com/qnrO2Ed_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/beer",
+      },
+      Object {
+        "location": "https://i.imgur.com/cscegSd_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/bolt",
+      },
+      Object {
+        "location": "https://i.imgur.com/WM6zUJu_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/burger",
+      },
+    ],
+    "available_avatars_count": 6,
+    "avatars_are_default": false,
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getAvailableAvatars calls the correct endpoint when unauthed 1`] = `
+Object {
+  "data": Object {
+    "available_avatars": Array [
+      Object {
+        "location": "https://i.imgur.com/QmC4NzH_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/3D",
+      },
+      Object {
+        "location": "https://i.imgur.com/f8wFE2Q_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/avocado",
+      },
+      Object {
+        "location": "https://i.imgur.com/5IB1Gxc_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/bear",
+      },
+      Object {
+        "location": "https://i.imgur.com/qnrO2Ed_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/beer",
+      },
+      Object {
+        "location": "https://i.imgur.com/cscegSd_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/bolt",
+      },
+      Object {
+        "location": "https://i.imgur.com/WM6zUJu_d.png?maxwidth=290&fidelity=grand",
+        "name": "flavor/burger",
+      },
+    ],
+    "available_avatars_count": 6,
+    "avatars_are_default": false,
+  },
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getFavorites calls the correct endpoint with defaults 1`] = `
 Object {
   "data": Array [],

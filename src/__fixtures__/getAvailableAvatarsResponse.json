@@ -1,0 +1,34 @@
+{
+  "data": {
+    "available_avatars": [
+      {
+        "name": "flavor/3D",
+        "location": "https://i.imgur.com/QmC4NzH_d.png?maxwidth=290&fidelity=grand"
+      },
+      {
+        "name": "flavor/avocado",
+        "location": "https://i.imgur.com/f8wFE2Q_d.png?maxwidth=290&fidelity=grand"
+      },
+      {
+        "name": "flavor/bear",
+        "location": "https://i.imgur.com/5IB1Gxc_d.png?maxwidth=290&fidelity=grand"
+      },
+      {
+        "name": "flavor/beer",
+        "location": "https://i.imgur.com/qnrO2Ed_d.png?maxwidth=290&fidelity=grand"
+      },
+      {
+        "name": "flavor/bolt",
+        "location": "https://i.imgur.com/cscegSd_d.png?maxwidth=290&fidelity=grand"
+      },
+      {
+        "name": "flavor/burger",
+        "location": "https://i.imgur.com/WM6zUJu_d.png?maxwidth=290&fidelity=grand"
+      }
+    ],
+    "available_avatars_count": 6,
+    "avatars_are_default": false
+  },
+  "success": true,
+  "status": 200
+}

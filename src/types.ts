@@ -40,6 +40,12 @@ interface ISubmissionOptions {
   page?: number;
 }
 
+interface IAvailableAvatarsOptions {
+  username: string;
+  accessToken?: string;
+  clientId?: string;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -48,4 +54,5 @@ export {
   IGalleryFavoritesOptions,
   IFavoritesOptions,
   ISubmissionOptions,
+  IAvailableAvatarsOptions,
 };

@@ -17,6 +17,7 @@ import {
   getGalleryFavorites,
   getFavorites,
   getSubmissions,
+  getAvailableAvatars,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -26,6 +27,7 @@ import {
   GALLERY_FAVORITES_ENDPOINT,
   FAVORITES_ENDPOINT,
   SUBMISSIONS_ENDPOINT,
+  AVAILABLE_AVATARS_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -347,6 +349,48 @@ describe('getImages tests', () => {
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {
         Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAvailableAvatars calls the correct endpoint when unauthed', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+
+    const mockResponse = JSON.stringify(
+      require('../__fixtures__/getAvailableAvatarsResponse.json'),
+    );
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${AVAILABLE_AVATARS_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getAvailableAvatars({ username, clientId })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAvailableAvatars calls the correct endpoint when authed', async () => {
+    const username = 'myUsername';
+    const accessToken = 'accessToken';
+
+    const mockResponse = JSON.stringify(
+      require('../__fixtures__/getAvailableAvatarsResponse.json'),
+    );
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${AVAILABLE_AVATARS_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getAvailableAvatars({ username, accessToken })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
       method: 'GET',
     });
