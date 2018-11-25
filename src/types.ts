@@ -69,6 +69,12 @@ interface IGalleryProfileOptions {
   [propName: string]: any;
 }
 
+interface IVerifyEmailOptions {
+  accessToken: string;
+  username: string;
+  [propName: string]: any;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -81,4 +87,5 @@ export {
   IAvatarOptions,
   ISettingsOptions,
   IGalleryProfileOptions,
+  IVerifyEmailOptions,
 };

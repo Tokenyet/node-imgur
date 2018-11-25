@@ -439,3 +439,11 @@ Object {
   "success": true,
 }
 `;
+
+exports[`getImages tests verifyEmail calls the correct endpoint 1`] = `
+Object {
+  "data": true,
+  "status": 200,
+  "success": true,
+}
+`;

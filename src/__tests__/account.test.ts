@@ -22,6 +22,7 @@ import {
   getSettings,
   changeSettings,
   getGalleryProfile,
+  verifyEmail,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -35,6 +36,7 @@ import {
   AVATAR_ENDPOINT,
   SETTINGS_ENDPOINT,
   GALLERY_PROFILE_ENDPOINT,
+  VERIFY_EMAIL_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -472,6 +474,23 @@ describe('getImages tests', () => {
     await expect(getGalleryProfile({ accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(GALLERY_PROFILE_ENDPOINT, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('verifyEmail calls the correct endpoint', async () => {
+    const accessToken = 'accessToken';
+    const username = 'myUsername';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/verifyEmailResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    await expect(verifyEmail({ accessToken, username })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(VERIFY_EMAIL_ENDPOINT.replace('<username>', username), {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
