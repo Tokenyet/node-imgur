@@ -15,6 +15,7 @@ import {
   IAlbumsOptions,
   IAlbumOptions,
   IAlbumIdsOptions,
+  IAlbumCountOptions,
 } from './types';
 import { URLSearchParams } from 'url';
 
@@ -50,6 +51,7 @@ const ALBUM_ENDPOINT = 'https://api.imgur.com/3/account/<username>/album';
 
 const ALBUM_IDS_ENDPOINT = 'https://api.imgur.com/3/account/<username>/albums/ids';
 
+const ALBUM_COUNT_ENDPOINT = 'https://api.imgur.com/3/account/<username>/albums/count';
 /**
  * Get an access token
  * @param data IAccessTokenRequestData
@@ -357,6 +359,20 @@ async function getAlbumIds(options: IAlbumIdsOptions) {
   return await response.json();
 }
 
+async function getAlbumCount(options: IAlbumCountOptions) {
+  const { accessToken, clientId, username } = options;
+  const endpoint = ALBUM_COUNT_ENDPOINT.replace('<username>', username);
+
+  const response = await fetch(endpoint, {
+    headers: {
+      Authorization: accessToken ? `Bearer ${accessToken}` : `Client-ID ${clientId}`,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
+}
+
 export {
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
@@ -375,6 +391,7 @@ export {
   ALBUMS_ENDPOINT,
   ALBUM_ENDPOINT,
   ALBUM_IDS_ENDPOINT,
+  ALBUM_COUNT_ENDPOINT,
   generateAccessToken,
   getBaseInfo,
   getBlockStatus,
@@ -395,4 +412,5 @@ export {
   getAlbums,
   getAlbum,
   getAlbumIds,
+  getAlbumCount,
 };

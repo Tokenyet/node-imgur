@@ -169,6 +169,42 @@ Object {
 }
 `;
 
+exports[`getImages tests getAlbumCount calls the correct endpoint when authed 1`] = `
+Object {
+  "data": 5,
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getAlbumCount calls the correct endpoint when unauthed 1`] = `
+Object {
+  "data": 5,
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getAlbumIds calls the correct endpoint when authed 1`] = `
+Object {
+  "data": Array [
+    "abc123",
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
+exports[`getImages tests getAlbumIds calls the correct endpoint when unauthed 1`] = `
+Object {
+  "data": Array [
+    "abc123",
+  ],
+  "status": 200,
+  "success": true,
+}
+`;
+
 exports[`getImages tests getAlbums calls the correct endpoint when authed 1`] = `
 Object {
   "data": Array [
@@ -229,26 +265,6 @@ Object {
       "title": "My Album",
       "views": 0,
     },
-  ],
-  "status": 200,
-  "success": true,
-}
-`;
-
-exports[`getImages tests getAlbumsIds calls the correct endpoint when authed 1`] = `
-Object {
-  "data": Array [
-    "abc123",
-  ],
-  "status": 200,
-  "success": true,
-}
-`;
-
-exports[`getImages tests getAlbumsIds calls the correct endpoint when unauthed 1`] = `
-Object {
-  "data": Array [
-    "abc123",
   ],
   "status": 200,
   "success": true,

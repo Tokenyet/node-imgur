@@ -27,6 +27,7 @@ import {
   getAlbums,
   getAlbum,
   getAlbumIds,
+  getAlbumCount,
   OAUTH2_TOKEN_ENDPOINT,
   ACCOUNT_ENDPOINT,
   BLOCK_STATUS_ENDPOINT,
@@ -44,6 +45,7 @@ import {
   ALBUMS_ENDPOINT,
   ALBUM_ENDPOINT,
   ALBUM_IDS_ENDPOINT,
+  ALBUM_COUNT_ENDPOINT,
 } from '../account';
 
 import { URLSearchParams } from 'url';
@@ -590,7 +592,7 @@ describe('getImages tests', () => {
     });
   });
 
-  test('getAlbumsIds calls the correct endpoint when unauthed', async () => {
+  test('getAlbumIds calls the correct endpoint when unauthed', async () => {
     const username = 'myUsername';
     const clientId = 'myClientId';
     const page = 2;
@@ -610,7 +612,7 @@ describe('getImages tests', () => {
     });
   });
 
-  test('getAlbumsIds calls the correct endpoint when authed', async () => {
+  test('getAlbumIds calls the correct endpoint when authed', async () => {
     const username = 'myUsername';
     const accessToken = 'accessToken';
 
@@ -620,6 +622,44 @@ describe('getImages tests', () => {
     const expectedEndpoint = `${ALBUM_IDS_ENDPOINT.replace('<username>', username)}`;
 
     await expect(getAlbumIds({ username, accessToken })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAlbumCount calls the correct endpoint when unauthed', async () => {
+    const username = 'myUsername';
+    const clientId = 'myClientId';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getAlbumCountResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${ALBUM_COUNT_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getAlbumCount({ username, clientId })).resolves.toMatchSnapshot();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+      method: 'GET',
+    });
+  });
+
+  test('getAlbumCount calls the correct endpoint when authed', async () => {
+    const username = 'myUsername';
+    const accessToken = 'accessToken';
+
+    const mockResponse = JSON.stringify(require('../__fixtures__/getAlbumCountResponse.json'));
+    fetch.mockReturnValue(Promise.resolve(new Response(mockResponse)));
+
+    const expectedEndpoint = `${ALBUM_COUNT_ENDPOINT.replace('<username>', username)}`;
+
+    await expect(getAlbumCount({ username, accessToken })).resolves.toMatchSnapshot();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(expectedEndpoint, {
       headers: {

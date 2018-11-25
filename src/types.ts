@@ -98,6 +98,13 @@ interface IAlbumIdsOptions {
   [propName: string]: any;
 }
 
+interface IAlbumCountOptions {
+  accessToken?: string;
+  clientId?: string;
+  username: string;
+  [propName: string]: any;
+}
+
 export {
   IAccessTokenRequestData,
   IBaseInfoOptions,
@@ -114,4 +121,5 @@ export {
   IAlbumsOptions,
   IAlbumOptions,
   IAlbumIdsOptions,
+  IAlbumCountOptions,
 };
